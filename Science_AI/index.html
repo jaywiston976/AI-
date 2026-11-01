@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>AI 从零开始 · 人工智能与机器学习科普</title>
+<meta name="description" content="面向普通人的 AI 与机器学习科普：7 个模块、9 个可以动手的实验，不写一行代码，弄懂机器学习到底在做什么。">
+<meta name="theme-color" content="#080b12">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%235c8dff'/%3E%3Cg fill='none' stroke='%23fff' stroke-width='1.8'%3E%3Ccircle cx='16' cy='9' r='2.6'/%3E%3Ccircle cx='9' cy='22' r='2.6'/%3E%3Ccircle cx='23' cy='22' r='2.6'/%3E%3Cpath d='M14.2 11.3L10.8 19.7M17.8 11.3l3.4 8.4M11.6 22h8.8'/%3E%3C/g%3E%3C/svg%3E">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body id="top">
+
+<noscript>
+  <p style="margin:0;padding:12px 20px;background:#3a2a12;color:#ffd9a0;font-size:13.5px;text-align:center">
+    本页的 9 个交互实验全部依赖 JavaScript 在本地计算，请开启 JavaScript 后重新访问。
+  </p>
+</noscript>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-logo" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="12" cy="5" r="2"/><circle cx="5" cy="18" r="2"/><circle cx="19" cy="18" r="2"/><path d="M10.6 6.7L6.4 16M13.4 6.7L17.6 16M7 18h10"/></g></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M4 12.5l5 5L20 6.5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.2v2.4M12 19.4v2.4M2.2 12h2.4M19.4 12h2.4M5.1 5.1l1.7 1.7M17.2 17.2l1.7 1.7M18.9 5.1l-1.7 1.7M6.8 17.2l-1.7 1.7"/></g></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.2A8.4 8.4 0 019.8 4a8.5 8.5 0 000 16 8.4 8.4 0 0010.2-5.8z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M3.5 7h17M3.5 12h17M3.5 17h17" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+    <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M12 11v5.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="12" cy="7.8" r="1.15" fill="currentColor"/></symbol>
+    <symbol id="i-alert" viewBox="0 0 24 24"><path d="M12 3.6L21.2 20H2.8L12 3.6z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M12 9.6v4.2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="12" cy="16.8" r="1.1" fill="currentColor"/></symbol>
+    <symbol id="i-bulb" viewBox="0 0 24 24"><path d="M9 18.2h6M10 21h4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><path d="M12 2.8a6.2 6.2 0 00-3.5 11.3c.5.36.8.93.8 1.54v1.16h5.4v-1.16c0-.61.3-1.18.8-1.54A6.2 6.2 0 0012 2.8z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24"><rect x="2.6" y="5" width="18.8" height="14" rx="2.4" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M3.4 6.6l8.6 6.2 8.6-6.2" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></symbol>
+  </defs>
+</svg>
+
+<div class="progress-rail"><span id="topProgress"></span></div>
+
+<header class="topbar">
+  <a class="brand" href="#top">
+    <svg width="19" height="19" style="color:var(--brand)"><use href="#i-logo"/></svg>
+    <span>AI 从零开始</span>
+  </a>
+  <div class="topbar-spacer"></div>
+  <span class="pill hide-sm" id="topPill"><span class="dot"></span>纯静态 · 无后端</span>
+  <button class="icon-btn" id="themeToggle" aria-label="切换明暗主题">
+    <svg id="themeIcon"><use href="#i-moon"/></svg>
+  </button>
+  <button class="icon-btn" id="navToggle" aria-label="打开目录">
+    <svg><use href="#i-menu"/></svg>
+  </button>
+</header>
+
+<div class="shell">
+
+  <aside class="sidebar" id="sidebar" aria-label="学习路径">
+    <p class="side-label">学习路径</p>
+    <ol class="nav-list" id="navList">
+      <li><a href="#m1" data-nav="m1"><span class="nav-idx">01</span><span>三个词的区别</span><svg class="nav-done"><use href="#i-check"/></svg></a></li>
+      <li><a href="#m2" data-nav="m2"><span class="nav-idx">02</span><span>换个方向写程序</span><svg class="nav-done"><use href="#i-check"/></svg></a></li>
+      <li><a href="#m3" data-nav="m3"><span class="nav-idx">03</span><span>三种学习方式</span><svg class="nav-done"><use href="#i-check"/></svg></a></li>
+      <li><a href="#m4" data-nav="m4"><span class="nav-idx">04</span><span>模型怎么“学”</span><svg class="nav-done"><use href="#i-check"/></svg></a></li>
+      <li><a href="#m5" data-nav="m5"><span class="nav-idx">05</span><span>神经网络</span><svg class="nav-done"><use href="#i-check"/></svg></a></li>
+      <li><a href="#m6" data-nav="m6"><span class="nav-idx">06</span><span>边界与代价</span><svg class="nav-done"><use href="#i-check"/></svg></a></li>
+      <li><a href="#m7" data-nav="m7"><span class="nav-idx">07</span><span>术语速查</span><svg class="nav-done"><use href="#i-check"/></svg></a></li>
+      <li><a href="#m8" data-nav="m8"><span class="nav-idx">08</span><span>自测八题</span><svg class="nav-done"><use href="#i-check"/></svg></a></li>
+    </ol>
+    <div class="side-foot">
+      <div class="k">已读完</div>
+      <div class="v"><span id="sidePct">0</span><span style="font-size:14px;color:var(--fg-3)">%</span></div>
+      <div class="bar"><i id="sideBar"></i></div>
+    </div>
+  </aside>
+
+  <main>
+
+    <!-- ================= HERO ================= -->
+    <section class="hero">
+      <span class="eyebrow">无需数学基础 · 约 25 分钟 · 9 个互动实验</span>
+      <h1>人工智能到底是<span class="nw">怎么<span class="grad">“学会”</span></span>东西的？</h1>
+      <p class="lede">
+        你每天都听到 AI、大模型、机器学习。真正值得搞清楚的不是“它有多强”，而是
+        <strong>它究竟在做什么</strong>。这个页面不会让你背公式，而是给你 9 个可以亲手拨动的小实验，
+        让你自己发现机器学习的三个秘密：它靠数据找规律，它靠纠错来改进，它自信但不理解。
+      </p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#m1">从第一课开始
+          <svg width="15" height="15" viewBox="0 0 24 24"><path d="M5 12h13M13 6.5l5.5 5.5-5.5 5.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <a class="btn" href="#m8">直接做自测</a>
+      </div>
+      <div class="hero-stats">
+        <div><b>7</b><span>个模块</span></div>
+        <div><b>9</b><span>个交互实验</span></div>
+        <div><b>0</b><span>行代码</span></div>
+        <div><b>0</b><span>个后端请求</span></div>
+      </div>
+    </section>
+
+    <!-- ================= 模块 1 ================= -->
+    <section class="chapter reveal" id="m1">
+      <span class="chapter-tag">模块 01</span>
+      <h2>人工智能、机器学习、深度学习，到底谁是谁</h2>
+      <p class="chapter-lead">
+        这三个词天天被混着用。它们不是三个并列的东西，而是三层包含关系——搞清楚这一点，
+        你就知道该对一个 AI 抱多大期待。
+      </p>
+
+      <div class="chapter-body">
+
+        <div class="demo" id="d-nested">
+          <div class="demo-head">
+            <div class="t">实验 01 · 点开三层套娃
+              <small>点击任意一圈，看这一层的定义和它解决什么问题</small>
+            </div>
+            <span class="demo-badge">可交互</span>
+          </div>
+          <div class="demo-body">
+            <div class="demo-stage" style="display:flex;justify-content:center;padding:14px 0">
+              <svg id="nestSvg" viewBox="0 22 420 288" style="width:100%;max-width:440px;display:block" role="img" aria-label="AI 包含机器学习，机器学习包含深度学习的嵌套示意">
+                <defs>
+                  <radialGradient id="gAI" cx="50%" cy="50%" r="60%">
+                    <stop offset="0%" style="stop-color:var(--brand);stop-opacity:.04"/>
+                    <stop offset="100%" style="stop-color:var(--brand);stop-opacity:.15"/>
+                  </radialGradient>
+                </defs>
+                <g class="nest-g" data-nest="ai" style="cursor:pointer">
+                  <circle cx="210" cy="170" r="126" fill="url(#gAI)" stroke="var(--brand)" stroke-width="1.4" stroke-dasharray="5 5" opacity=".8"/>
+                  <text x="210" y="32" text-anchor="middle" font-size="13" font-weight="650" fill="var(--brand)">人工智能 AI</text>
+                </g>
+                <g class="nest-g" data-nest="ml" style="cursor:pointer">
+                  <circle cx="210" cy="178" r="88" fill="color-mix(in srgb, var(--brand-2) 12%, transparent)" stroke="var(--brand-2)" stroke-width="1.4" opacity=".85"/>
+                  <text x="210" y="80" text-anchor="middle" font-size="12.5" font-weight="650" fill="var(--brand-2)">机器学习 ML</text>
+                </g>
+                <g class="nest-g" data-nest="dl" style="cursor:pointer">
+                  <circle cx="210" cy="184" r="52" fill="color-mix(in srgb, var(--violet) 14%, transparent)" stroke="var(--violet)" stroke-width="1.4" opacity=".9"/>
+                  <text x="210" y="176" text-anchor="middle" font-size="12" font-weight="650" fill="var(--violet)">深度学习</text>
+                  <text x="210" y="194" text-anchor="middle" font-size="11" fill="var(--fg-2)">DL</text>
+                  <text x="210" y="212" text-anchor="middle" font-size="10" fill="var(--fg-3)">今天的 AI 主角</text>
+                </g>
+              </svg>
+            </div>
+            <div class="card" id="nestInfo" style="margin-top:14px;border-color:var(--line-soft);background:var(--bg-elev)">
+              <p style="font-size:14px;color:var(--fg-2);margin:0">点击上图任意一圈，这里会显示它的定义。</p>
+            </div>
+          </div>
+        </div>
+
+        <h3>这三层分别意味着什么</h3>
+        <p>
+          <strong>人工智能（AI）</strong>是最大的一圈，它是一个<em>目标</em>：让机器完成那些通常需要人类智能才能完成的事。
+          这个圈里装着 1960 年代的逻辑推理程序、1990 年代的专家系统（一堆人手工写的 if-then 规则），
+          以及今天的神经网络。它们本质上完全不是同一种东西，只是都在追同一个目标。
+        </p>
+        <p>
+          <strong>机器学习（ML）</strong>是一种<em>做法</em>：不给规则，给数据，让程序自己把规律算出来。
+          这是 1980 年代后逐渐成为主流的思路，也是本文档后面所有内容的主角。
+        </p>
+        <p>
+          <strong>深度学习（DL）</strong>是机器学习里的一种<em>工具</em>：用很多层「神经元」堆起来的网络来找规律。
+          2012 年之后图像识别、语音识别、机器翻译、大语言模型全部属于这一支，所以它最出名，
+          但它只是机器学习的一小块。
+        </p>
+
+        <div class="callout key">
+          <svg class="callout-ico"><use href="#i-info"/></svg>
+          <div>
+            <p><b>一句话记住：</b>AI 是目标，机器学习是实现目标的主要方法，深度学习是机器学习里最有效的那把锤子。</p>
+            <p>所以「这个 AI 用了深度学习吗」这个问题问得通，但「深度学习和机器学习哪个更好」是问错了——前者是后者的子集。</p>
+          </div>
+        </div>
+
+        <div class="callout warn">
+          <svg class="callout-ico"><use href="#i-alert"/></svg>
+          <div>
+            <p><b>别被「智能」这个词骗了。</b>今天所有商用的 AI 都是<strong>窄 AI</strong>：它在某一件很窄的事情上超过了人，
+            但它不知道自己正在做什么，也没法把这件事迁移到别处。写诗很行的模型，可能算不清你家三个人分一张账单。</p>
+            <p>能在任意任务上达到人类水平、还能自我迁移的<strong>通用人工智能（AGI）</strong>，目前并不存在。</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ================= 模块 2 ================= -->
+    <section class="chapter reveal" id="m2">
+      <span class="chapter-tag">模块 02</span>
+      <h2>机器学习最难理解的一点：它把写程序的方向反过来了</h2>
+      <p class="chapter-lead">
+        如果你只记住这个页面的一件事，请记住这一段。传统编程是「人给规则，机器出答案」；
+        机器学习是「人给答案，机器出规则」。方向完全相反。
+      </p>
+
+      <div class="chapter-body">
+
+        <div class="duo">
+          <div class="duo-a">
+            <div class="duo-k">传统编程</div>
+            <div class="flow">
+              <b>规则</b> + <b>数据</b><br>
+              <span class="arrow">↓</span> 程序员写 if-else<br>
+              <b>答案</b>
+            </div>
+          </div>
+          <div class="duo-b">
+            <div class="duo-k">机器学习</div>
+            <div class="flow">
+              <b>数据</b> + <b>答案</b><br>
+              <span class="arrow">↓</span> 算法找规律<br>
+              <b>规则</b>（一堆数字，叫参数）
+            </div>
+          </div>
+        </div>
+
+        <p>
+          举个具体的例子。你想让程序判断一封邮件是不是垃圾邮件。
+        </p>
+        <p>
+          传统做法：你想出所有垃圾邮件的特征，写成规则。
+          <span class="mono" style="color:var(--fg-3)">如果 含「中奖」 则 垃圾</span>，一条一条加。
+          听起来可以，但垃圾邮件发送者下周就会把「中奖」改成「中奖」，或者改成「恭喜您」。
+          你的规则表永远在追赶，而且规则之间会互相打架——最后那几百条 if 里，没人敢删任何一条。
+        </p>
+
+        <div class="demo" id="d-rules">
+          <div class="demo-head">
+            <div class="t">实验 02 · 你来当那个写规则的人
+              <small>勾选你认为能识别垃圾邮件的关键词，看这 12 封邮件能被判对几封</small>
+            </div>
+            <span class="demo-badge">可交互</span>
+          </div>
+          <div class="demo-body">
+            <div class="chips" id="ruleChips" role="group" aria-label="关键词规则"></div>
+            <div class="mail-list" id="ruleMail" style="margin-top:16px"></div>
+            <div class="metrics" id="ruleMetrics"></div>
+            <div class="callout warn" id="ruleVerdict" style="display:none;margin-bottom:0">
+              <svg class="callout-ico"><use href="#i-alert"/></svg>
+              <div><p id="ruleVerdictText"></p></div>
+            </div>
+          </div>
+        </div>
+
+        <p>
+          机器学习的做法完全不一样：你给它 1 万封已经人工分好类的邮件（这叫<em>标注数据</em>），
+          算法自己去试——「含『点击』这个词，垃圾邮件的比例是正常邮件的 12 倍，那给它一个高权重」。
+          试完之后你得到的是一个装着几十万个数字的文件（<em>参数</em>），不是一个 if 列表。
+        </p>
+        <p>
+          这就是为什么你会听到「模型 70B 参数」。参数就是它从数据里学到的那些数字，
+          <strong>它不会告诉你「为什么」，它只有一堆权重</strong>。这一点后面会反复出现。
+        </p>
+
+        <div class="callout idea">
+          <svg class="callout-ico"><use href="#i-bulb"/></svg>
+          <div>
+            <p><b>代价是什么？</b>你换来了「不用手写规则」，但付出了两笔新成本：
+            一是<strong>需要大量标注数据</strong>（谁来标、标得准不准，都是问题）；
+            二是<strong>模型只会做数据里出现过的事</strong>——数据里没有的情况，它照样会给你一个答案，只是答案没意义。</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ================= 模块 3 ================= -->
+    <section class="chapter reveal" id="m3">
+      <span class="chapter-tag">模块 03</span>
+      <h2>三种学习方式：区别只有一个问题——有没有标准答案</h2>
+      <p class="chapter-lead">
+        媒体上各种「监督」「无监督」「强化」听着很玄。其实分水岭非常朴素：
+        训练的时候，你手上有标准答案吗？有，就是监督学习；没有，是无监督；没有答案但事后能打分，是强化学习。
+      </p>
+
+      <div class="chapter-body">
+
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>类型</th><th>训练信号</th><th>典型任务</th><th>你熟悉的例子</th></tr></thead>
+            <tbody>
+              <tr><td>监督学习</td><td>每一条数据都带正确答案</td><td>分类、回归</td><td>垃圾邮件、人脸解锁、房价预测、大模型预测下一个词</td></tr>
+              <tr><td>无监督学习</td><td>没有答案，自己找结构</td><td>聚类、降维、异常检测</td><td>用户分群、信用卡盗刷、新闻自动归类</td></tr>
+              <tr><td>强化学习</td><td>没有答案，只有延迟的奖励</td><td>序贯决策</td><td>AlphaGo、机器人走路、推荐策略、自动交易</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>监督学习：你画一条线，机器也画一条线</h3>
+        <p>
+          先看最简单的情形。桌上有一堆点，两类颜色。人的直觉是「在中间画一条线把它们分开」。
+          监督学习做的就是这件事的自动版：它不断微调那条线的<strong>角度和位置</strong>，直到分错的点最少。
+        </p>
+
+        <div class="demo" id="d-boundary">
+          <div class="demo-head">
+            <div class="t">实验 03 · 亲手画一条分界线
+              <small>拖动两个滑块调整直线的角度和位置；然后让机器用梯度下降自己找</small>
+            </div>
+            <span class="demo-badge">可交互</span>
+          </div>
+          <div class="demo-body">
+            <div class="demo-stage narrow"><canvas id="c-boundary" height="auto" data-ratio="1"></canvas></div>
+            <div class="demo-controls">
+              <div class="ctrl">
+                <label class="ctrl-l" for="bdAngle"><span>直线角度</span><output id="bdAngleOut">0°</output></label>
+                <input type="range" id="bdAngle" min="-90" max="90" value="0" step="1">
+              </div>
+              <div class="ctrl">
+                <label class="ctrl-l" for="bdOffset"><span>平移位置</span><output id="bdOffsetOut">0.00</output></label>
+                <input type="range" id="bdOffset" min="-70" max="70" value="0" step="1">
+              </div>
+              <div style="display:flex;gap:8px;align-items:flex-end;flex:0 0 auto;padding-bottom:2px">
+                <button class="btn btn-sm btn-primary" id="bdTrain">让机器来找</button>
+                <button class="btn btn-sm" id="bdReset">重来</button>
+              </div>
+            </div>
+            <div class="metrics">
+              <div class="metric"><div class="k">你的正确率</div><div class="v" id="bdAcc">—</div></div>
+              <div class="metric"><div class="k">分对的蓝点</div><div class="v" id="bdTp">—</div></div>
+              <div class="metric"><div class="k">分对的橙点</div><div class="v" id="bdTn">—</div></div>
+              <div class="metric"><div class="k">状态</div><div class="v" id="bdState" style="font-size:14px">手动</div></div>
+            </div>
+          </div>
+        </div>
+
+        <p>
+          所谓「训练」，在数学上就是：定义一个衡量「错得有多离谱」的函数（损失函数），
+          然后不断把这根线的参数往损失变小的方向挪一点点。挪的方式叫<strong>梯度下降</strong>，模块 4 会拆开讲。
+        </p>
+
+        <h3>无监督学习：没人告诉它有几堆，它自己找</h3>
+        <p>
+          现在把标签擦掉。你只知道有 60 个点，不知道它们该分几类，也不知道每类的含义。
+          无监督学习仍然能做一件有用的事：<strong>把挨得近的点归到一起</strong>。
+          最经典的算法叫 K-means，逻辑简单到一句话能说完——先随便放 K 个中心点，
+          然后重复「每个点归给最近的中心」→「每个中心挪到这堆点的平均位置」，直到不再变化。
+        </p>
+
+        <div class="demo" id="d-kmeans">
+          <div class="demo-head">
+            <div class="t">实验 04 · 让它自己分组
+              <small>调 K 值（它以为有几组），点开始，看中心点怎么一步步挪到位</small>
+            </div>
+            <span class="demo-badge">可交互</span>
+          </div>
+          <div class="demo-body">
+            <div class="demo-stage narrow"><canvas id="c-kmeans" height="auto" data-ratio="1"></canvas></div>
+            <div class="demo-controls">
+              <div class="ctrl" style="flex:0 0 190px">
+                <label class="ctrl-l" for="kmK"><span>K（分几组）</span><output id="kmKOut">3</output></label>
+                <input type="range" id="kmK" min="2" max="5" value="3" step="1">
+              </div>
+              <div style="display:flex;gap:8px;align-items:flex-end;flex:0 0 auto;padding-bottom:2px">
+                <button class="btn btn-sm btn-primary" id="kmRun">开始聚类</button>
+                <button class="btn btn-sm" id="kmReset">换一批数据</button>
+              </div>
+            </div>
+            <div class="metrics">
+              <div class="metric"><div class="k">迭代轮次</div><div class="v" id="kmIter">0</div></div>
+              <div class="metric"><div class="k">簇内紧密度</div><div class="v" id="kmInertia">—</div></div>
+              <div class="metric"><div class="k">状态</div><div class="v" id="kmState" style="font-size:14px">待开始</div></div>
+            </div>
+            <div class="callout" style="margin-bottom:0;margin-top:14px;border-color:var(--line-soft)">
+              <svg class="callout-ico"><use href="#i-info"/></svg>
+              <div><p id="kmNote" style="font-size:13.5px;color:var(--fg-2)">
+                注意：它分出来的组，<strong>没有名字</strong>。哪一堆是「重度用户」、哪一堆是「流失风险」，
+                是你事后贴上去的标签。算法只负责「相似」，不负责「意义」。
+              </p></div>
+            </div>
+          </div>
+        </div>
+
+        <h3>强化学习：没人告诉它对错，只有事后的一句「还不错」</h3>
+        <p>
+          监督学习的每一条样本都有一个标准答案。但有些场景根本没有答案——
+          你下了一步棋，没人能立刻告诉你这步是不是最优，只有几十步之后赢了或输了。
+          强化学习处理的就是这种<strong>延迟的、稀疏的奖励</strong>。
+        </p>
+        <p>
+          看下面这个网格。智能体（那个亮点）要从左上角走到右下角，每走一步扣一点分，到终点得大分。
+          它一开始完全是瞎走，然后靠一件事改进：<em>把「在这个格子往这个方向走，最后平均能拿到多少分」记下来</em>。
+          这个记录就是 Q 表。跑完几百轮之后，格子里的数字会自己变成一张「地势图」，
+          沿着数字上升的方向走，就是最优路径。
+        </p>
+
+        <div class="demo" id="d-qlearn">
+          <div class="demo-head">
+            <div class="t">实验 05 · 让智能体自己摸出一条路
+              <small>点开始训练，看价值如何从终点一路「渗」回起点；训练完可以看它最终的走法</small>
+            </div>
+            <span class="demo-badge">可交互</span>
+          </div>
+          <div class="demo-body">
+            <div class="demo-stage narrow" style="padding:14px"><canvas id="c-qlearn" height="auto" data-ratio="1"></canvas></div>
+            <div class="demo-controls">
+              <div style="display:flex;gap:8px;align-items:flex-end;flex:1 1 auto">
+                <button class="btn btn-sm btn-primary" id="qRun">开始训练</button>
+                <button class="btn btn-sm" id="qPath" disabled>看它怎么走</button>
+                <button class="btn btn-sm" id="qReset">清空记忆</button>
+              </div>
+              <div class="ctrl" style="flex:0 0 200px">
+                <label class="ctrl-l" for="qSpeed"><span>训练速度</span><output id="qSpeedOut">中</output></label>
+                <input type="range" id="qSpeed" min="1" max="3" value="2" step="1">
+              </div>
+            </div>
+            <div class="metrics">
+              <div class="metric"><div class="k">已训练轮次</div><div class="v" id="qEp">0</div></div>
+              <div class="metric"><div class="k">最近 20 轮步数</div><div class="v" id="qSteps">—</div></div>
+              <div class="metric"><div class="k">探索率 ε</div><div class="v" id="qEps">1.00</div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="callout key">
+          <svg class="callout-ico"><use href="#i-info"/></svg>
+          <div>
+            <p><b>三者的分界，其实在于「反馈有多具体」。</b>监督学习给你完整的答案（「这张图是猫」）；
+            强化学习只给一个分数（「这局赢了」）；无监督连分数都没有，只能靠数据自身的结构。</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ================= 模块 4 ================= -->
+    <section class="chapter reveal" id="m4">
+      <span class="chapter-tag">模块 04</span>
+      <h2>模型是怎么「学」的：猜、量误差、往下坡挪一步</h2>
+      <p class="chapter-lead">
+        不管多复杂的模型，训练过程都只有这三步，重复几十万次。
+        理解了这个循环，你就理解了「训练」这个词的全部含义。
+      </p>
+
+      <div class="chapter-body">
+
+        <p>
+          想象你在浓雾里的山上，要走到谷底，但看不见路。你只能做一件事：
+          <strong>用脚试一下四个方向，感觉哪个方向是下坡，就往那边迈一小步</strong>。
+          迈完再试一次。这个笨办法能让任何形状的山都走到底（可能只是某个局部洼地）。
+        </p>
+        <p>
+          把它翻译成机器学习的话：
+        </p>
+        <ul style="color:var(--fg-2);font-size:15px;padding-left:22px;margin:0 0 20px">
+          <li style="margin-bottom:6px"><strong>山的形状</strong> = 损失函数，横轴是模型的参数，纵轴是「错得多离谱」。</li>
+          <li style="margin-bottom:6px"><strong>你站的位置</strong> = 当前参数取值。</li>
+          <li style="margin-bottom:6px"><strong>下坡方向</strong> = 梯度，它是损失函数对参数的导数，告诉你往哪边挪损失会减小。</li>
+          <li><strong>迈多大一步</strong> = 学习率，这是你要手动设的（这类由人设定的量叫<em>超参数</em>）。</li>
+        </ul>
+
+        <div class="demo" id="d-gd">
+          <div class="demo-head">
+            <div class="t">实验 06 · 亲手调一次学习率
+              <small>这是最容易出问题、也最值得亲手感受的一个参数。把它拉大，看会发生什么</small>
+            </div>
+            <span class="demo-badge">可交互</span>
+          </div>
+          <div class="demo-body">
+            <div class="demo-stage"><canvas id="c-gd" height="300"></canvas></div>
+            <div class="demo-controls">
+              <div class="ctrl" style="flex:0 0 210px">
+                <label class="ctrl-l" for="gdLr"><span>学习率</span><output id="gdLrOut">0.10</output></label>
+                <input type="range" id="gdLr" min="-240" max="20" value="-100" step="1">
+                <span class="ctrl-hint">对数刻度：从 0.0001 到 1.6</span>
+              </div>
+              <div class="ctrl" style="flex:0 0 150px">
+                <label class="ctrl-l" for="gdTerrain"><span>地形</span></label>
+                <select id="gdTerrain">
+                  <option value="bowl">碗形（简单地形）</option>
+                  <option value="bumpy">起伏（有局部最低点）</option>
+                </select>
+              </div>
+              <div style="display:flex;gap:8px;align-items:flex-end;flex:0 0 auto;padding-bottom:2px">
+                <button class="btn btn-sm btn-primary" id="gdRun">开始</button>
+                <button class="btn btn-sm" id="gdReset">重置</button>
+              </div>
+            </div>
+            <div class="metrics">
+              <div class="metric"><div class="k">迭代步数</div><div class="v" id="gdStep">0</div></div>
+              <div class="metric"><div class="k">参数 w</div><div class="v" id="gdW">0.00</div></div>
+              <div class="metric"><div class="k">损失</div><div class="v" id="gdLoss">—</div></div>
+              <div class="metric"><div class="k">状态</div><div class="v" id="gdState" style="font-size:14px">就绪</div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="callout warn">
+          <svg class="callout-ico"><use href="#i-alert"/></svg>
+          <div>
+            <p><b>学习率是训练里最容易翻车的参数。</b>太小：几百步还在半山腰，训练几小时也不收敛；
+            太大：一步跨过谷底，在两侧来回弹，loss 上下乱跳甚至变成 NaN（发散）。</p>
+            <p>所以实际工程里会用到「学习率预热」「学习率衰减」这些技巧——本质都是同一个意思：
+            先大步找方向，再小步对齐。</p>
+          </div>
+        </div>
+
+        <h3>过拟合：把答案背下来，不等于会做题</h3>
+        <p>
+          这是机器学习里最核心的陷阱，没有之一。学生时代你一定见过这种人：
+          把练习册的答案背得滚瓜烂熟，一换题目就完全不会。模型一模一样。
+        </p>
+        <p>
+          下面这批点来自一条平滑的曲线，但每个点都带一点随机噪声（现实数据永远有噪声）。
+          我们用一条多项式曲线去穿过它们。<strong>阶数</strong>就是你允许这条曲线有多弯——
+          1 阶是直线，12 阶可以扭成麻花。拖动滑块，同时看右下角的两条误差曲线。
+        </p>
+
+        <div class="demo" id="d-overfit">
+          <div class="demo-head">
+            <div class="t">实验 07 · 复杂度旋钮：欠拟合 ↔ 刚好 ↔ 过拟合
+              <small>拖动阶数，观察「训练误差」和「测试误差」怎么分道扬镳</small>
+            </div>
+            <span class="demo-badge">可交互</span>
+          </div>
+          <div class="demo-body">
+            <div class="demo-stage" style="display:grid;grid-template-columns:1fr;gap:0">
+              <canvas id="c-overfit" height="300"></canvas>
+            </div>
+            <div class="demo-controls">
+              <div class="ctrl" style="flex:1 1 240px">
+                <label class="ctrl-l" for="ofDeg"><span>模型复杂度（多项式阶数）</span><output id="ofDegOut">3</output></label>
+                <input type="range" id="ofDeg" min="1" max="12" value="3" step="1">
+              </div>
+              <div style="display:flex;gap:8px;align-items:flex-end;flex:0 0 auto;padding-bottom:2px">
+                <button class="btn btn-sm" id="ofResample">换一批数据</button>
+              </div>
+            </div>
+            <div class="legend" style="margin-top:16px">
+              <span><i style="background:var(--brand)"></i>训练误差</span>
+              <span><i style="background:var(--pink)"></i>测试误差</span>
+              <span style="color:var(--fg-3)">横轴 = 模型复杂度（阶数）</span>
+            </div>
+            <div class="demo-stage"><canvas id="c-ofcurve" height="170"></canvas></div>
+            <div class="metrics">
+              <div class="metric"><div class="k">训练误差</div><div class="v" id="ofTrain">—</div></div>
+              <div class="metric"><div class="k">测试误差（新数据）</div><div class="v" id="ofTest">—</div></div>
+              <div class="metric"><div class="k">诊断</div><div class="v" id="ofDiag" style="font-size:14px">—</div></div>
+            </div>
+            <div class="callout" id="ofNote" style="margin-bottom:0;margin-top:14px;border-color:var(--line-soft)">
+              <svg class="callout-ico"><use href="#i-info"/></svg>
+              <div><p id="ofNoteText" style="font-size:13.5px;color:var(--fg-2)"></p></div>
+            </div>
+          </div>
+        </div>
+
+        <p>
+          注意上图中最关键的一件事：<strong>训练误差几乎只会单调下降</strong>——阶数越高，曲线越能穿过每一个训练点，
+          最后训练误差接近 0。但<strong>测试误差</strong>先降后升。那个 U 形的最低点，才是你真正想要的位置。
+        </p>
+        <p>
+          这个现象的直接后果，就是为什么「在训练集上准确率 99%」这句话基本没有信息量。
+          真实评估必须用模型<strong>从没见过的数据</strong>。工程上会做三件事来抑制过拟合：
+          加更多数据、降低模型复杂度、加正则化（在损失函数里惩罚过大的参数值）。
+        </p>
+
+      </div>
+    </section>
+
+    <!-- ================= 模块 5 ================= -->
+    <section class="chapter reveal" id="m5">
+      <span class="chapter-tag">模块 05</span>
+      <h2>神经网络：一个很笨的单元，堆起来就很厉害</h2>
+      <p class="chapter-lead">
+        「神经网络」听起来像在模仿大脑，实际上它简单得有点让人失望：
+        每个单元只做两件事——加权求和，然后过一个弯。
+      </p>
+
+      <div class="chapter-body">
+
+        <p>
+          一个神经元收到几个输入，每个输入乘一个权重，全部加起来，再加一个偏置，最后通过一个
+          <strong>激活函数</strong>把结果压一下。就这样。没有任何神秘之处。
+        </p>
+
+        <div class="demo" id="d-neuron">
+          <div class="demo-head">
+            <div class="t">实验 08 · 拆开一个神经元
+              <small>调输入和权重，看这个单元的输出是怎么算出来的</small>
+            </div>
+            <span class="demo-badge">可交互</span>
+          </div>
+          <div class="demo-body">
+            <div class="demo-stage"><canvas id="c-neuron" height="330"></canvas></div>
+            <div class="demo-controls">
+              <div class="ctrl"><label class="ctrl-l" for="nX1"><span>输入 x₁</span><output id="nX1Out">0.8</output></label><input type="range" id="nX1" min="0" max="1" value="0.8" step="0.01"></div>
+              <div class="ctrl"><label class="ctrl-l" for="nX2"><span>输入 x₂</span><output id="nX2Out">0.3</output></label><input type="range" id="nX2" min="0" max="1" value="0.3" step="0.01"></div>
+              <div class="ctrl"><label class="ctrl-l" for="nX3"><span>输入 x₃</span><output id="nX3Out">0.5</output></label><input type="range" id="nX3" min="0" max="1" value="0.5" step="0.01"></div>
+              <div class="ctrl"><label class="ctrl-l" for="nW1"><span>权重 w₁</span><output id="nW1Out">1.40</output></label><input type="range" id="nW1" min="-2" max="2" value="1.4" step="0.05"></div>
+              <div class="ctrl"><label class="ctrl-l" for="nW2"><span>权重 w₂</span><output id="nW2Out">-0.80</output></label><input type="range" id="nW2" min="-2" max="2" value="-0.8" step="0.05"></div>
+              <div class="ctrl"><label class="ctrl-l" for="nW3"><span>权重 w₃</span><output id="nW3Out">0.60</output></label><input type="range" id="nW3" min="-2" max="2" value="0.6" step="0.05"></div>
+              <div class="ctrl"><label class="ctrl-l" for="nB"><span>偏置 b</span><output id="nBOut">-0.30</output></label><input type="range" id="nB" min="-2" max="2" value="-0.3" step="0.05"></div>
+              <div class="ctrl" style="flex:0 0 150px">
+                <label class="ctrl-l" for="nAct"><span>激活函数</span></label>
+                <select id="nAct">
+                  <option value="sigmoid">Sigmoid</option>
+                  <option value="relu">ReLU</option>
+                  <option value="tanh">Tanh</option>
+                  <option value="linear">线性（无弯曲）</option>
+                </select>
+              </div>
+            </div>
+            <div class="metrics">
+              <div class="metric"><div class="k">加权和 z</div><div class="v" id="nZ">—</div></div>
+              <div class="metric"><div class="k">输出 a</div><div class="v good" id="nA">—</div></div>
+              <div class="metric"><div class="k">激活函数作用</div><div class="v" id="nEffect" style="font-size:13.5px">—</div></div>
+            </div>
+          </div>
+        </div>
+
+        <h3>为什么非要「过一个弯」</h3>
+        <p>
+          上面实验中把激活函数切到「线性」，你会看到输出就是输入的直线组合。
+          这时无论堆多少层，整个网络等价于<strong>一层</strong>——因为直线的组合还是直线。
+          这就是 1969 年让神经网络研究停滞十几年的那个结论。
+        </p>
+        <p>
+          加上那个「弯」（Sigmoid、ReLU 这类非线性函数）之后，多层叠加才能逼近任意复杂的曲线。
+          这是深度学习成立的前提条件，不是可选装饰。
+        </p>
+
+        <h3>层层堆叠 = 层层抽象</h3>
+        <p>
+          单层网络做不了复杂判断，但把几百层叠起来，每一层都拿上一层的输出当输入，事情就变了。
+          在图像网络里，这个分工是<strong>训练时自动形成的</strong>，没有人手工指定：
+        </p>
+        <div class="duo duo-4">
+          <div><div class="duo-k">第 1–2 层</div><div style="font-size:13.5px;color:var(--fg-2);line-height:1.7">只认<b>边缘</b>和<b>色块</b>。横线、竖线、明暗交界。</div></div>
+          <div><div class="duo-k">第 3–5 层</div><div style="font-size:13.5px;color:var(--fg-2);line-height:1.7">把这些边拼成<b>纹理</b>和<b>局部形状</b>——毛发、条纹、圆孔。</div></div>
+          <div><div class="duo-k">第 6–15 层</div><div style="font-size:13.5px;color:var(--fg-2);line-height:1.7">拼成<b>部件</b>——眼睛、耳朵、轮子、把手。</div></div>
+          <div><div class="duo-k">更深的层</div><div style="font-size:13.5px;color:var(--fg-2);line-height:1.7">拼成<b>整体对象</b>——「这是一只猫」。</div></div>
+        </div>
+        <p style="margin-top:16px">
+          大语言模型是同一个思路，只是输入换成了文字：它先把文字切成 <strong>token</strong>（词片），
+          把每个 token 变成一串数字（<strong>向量</strong>，也叫 embedding），然后靠几十层注意力机制去算
+          「在当前上下文里，哪个词该影响哪个词」。它的训练目标简单到不可思议：
+          <strong>给定前面的文字，预测下一个 token 是什么</strong>。全部能力都从这个目标里长出来。
+        </p>
+
+        <div class="callout key">
+          <svg class="callout-ico"><use href="#i-info"/></svg>
+          <div>
+            <p><b>参数量是什么意思？</b>就是这些权重数字的总个数。7B = 70 亿个数字，约 14GB（每个 2 字节）。
+            所谓「训练」，就是把这 70 亿个数字从随机值，一格一格往下坡挪到有用的位置。</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ================= 模块 6 ================= -->
+    <section class="chapter reveal" id="m6">
+      <span class="chapter-tag">模块 06</span>
+      <h2>它的边界在哪：自信，但不理解</h2>
+      <p class="chapter-lead">
+        前面讲的都是它能做什么。这一节讲它做不到什么——而且这些限制不是「再等等就解决了」的工程问题，
+        而是当前方法本身带来的结构性后果。
+      </p>
+
+      <div class="chapter-body">
+
+        <h3>它优化的是「像」，不是「对」</h3>
+        <p>
+          大语言模型的训练目标是「预测下一个词」。这个目标和「说真话」并不是一回事。
+          一个训练充分的模型，学会了在什么上下文后面接什么词最符合统计规律。
+          当它遇到训练数据里稀少的领域时，它仍然会流畅地生成——因为<em>流畅</em>才是它被优化的东西。
+          这就是<strong>幻觉（hallucination）</strong>：它不是故意骗你，它是被设计成「无论如何都要接下去说」。
+        </p>
+
+        <h3>分布外：它的自信不会随错误一起下降</h3>
+        <p>
+          人类遇到不懂的东西会犹豫。模型不会——因为它的输出是一个概率分布，
+          而 softmax 永远会挑一个最大值出来。<strong>置信度高</strong>只说明「这个答案在内部最像」，
+          不说明「这个答案正确」。拖动下面的滑块，看两条线怎么分开。
+        </p>
+
+        <div class="demo" id="d-confidence">
+          <div class="demo-head">
+            <div class="t">实验 09 · 置信度与正确率的分离
+              <small>横轴是输入离训练数据有多远。拖动滑块，看模型的「自信」和「实际正确」如何背离</small>
+            </div>
+            <span class="demo-badge">可交互</span>
+          </div>
+          <div class="demo-body">
+            <div class="demo-stage"><canvas id="c-confidence" height="270"></canvas></div>
+            <div class="demo-controls">
+              <div class="ctrl" style="flex:1 1 240px">
+                <label class="ctrl-l" for="cfPos"><span>输入与训练数据的偏离程度</span><output id="cfPosOut">0.0</output></label>
+                <input type="range" id="cfPos" min="0" max="100" value="0" step="1">
+              </div>
+            </div>
+            <div class="metrics">
+              <div class="metric"><div class="k">模型置信度</div><div class="v" id="cfConf">—</div></div>
+              <div class="metric"><div class="k">实际正确率</div><div class="v" id="cfAcc">—</div></div>
+              <div class="metric"><div class="k">判断</div><div class="v" id="cfVerdict" style="font-size:13.5px">—</div></div>
+            </div>
+            <div class="callout" style="margin-bottom:0;margin-top:14px;border-color:var(--line-soft)">
+              <svg class="callout-ico"><use href="#i-info"/></svg>
+              <div><p id="cfNote" style="font-size:13.5px;color:var(--fg-2)">
+                训练分布内（左段）：置信度和正确率基本贴合，模型的自我评估是可信的。
+                一旦走到它没见过的区域（右段），置信度还挂在 85% 以上，正确率却崩到 10% 以下——
+                这是所有基于概率的模型共有的性质。
+              </p></div>
+            </div>
+          </div>
+        </div>
+
+        <h3>数据里的偏见，会变成模型里的偏见</h3>
+        <p>
+          模型学的是数据里的统计规律。如果历史数据里，某个群体在某个结果上占比更高，
+          模型就会把这个相关性当成规律来用——而且它<strong>会放大</strong>，因为预测会反过来影响下一轮收集到的数据。
+        </p>
+        <p>
+          常见的错误应对是「把性别、种族这些字段删掉」。这几乎没用：
+          邮编、购物习惯、用词习惯都可以作为<strong>代理变量</strong>，间接还原出被删掉的那一列。
+          真正有效的做法是：检查训练数据的分布、按群体切分评估指标、对敏感属性做公平性约束。
+        </p>
+
+        <div class="duo">
+          <div style="border-left:2px solid var(--danger)">
+            <div class="duo-k" style="color:var(--danger)">它做不到</div>
+            <div style="font-size:14px;color:var(--fg-2);line-height:1.85">
+              知道自己不知道<br>
+              解释自己为什么这么判断<br>
+              保证事实正确（只保证流畅）<br>
+              处理训练数据里没有的分布<br>
+              为自己的输出承担责任
+            </div>
+          </div>
+          <div style="border-left:2px solid var(--brand-2)">
+            <div class="duo-k" style="color:var(--brand-2)">它确实擅长</div>
+            <div style="font-size:14px;color:var(--fg-2);line-height:1.85">
+              在见过的分布内做模式识别<br>
+              处理高维、海量、人类看不出的相关<br>
+              把一种形式转成另一种（文字↔图片↔代码）<br>
+              7×24 稳定重复同一判断<br>
+              从不疲劳、从不受情绪影响
+            </div>
+          </div>
+        </div>
+
+        <div class="callout warn">
+          <svg class="callout-ico"><use href="#i-alert"/></svg>
+          <div>
+            <p><b>最实用的一个心法：</b>把模型当成一个「知识渊博但从不承认自己不知道、且永远语气笃定的实习生」。
+            它的产出需要你审，尤其是数字、引用、法律和医疗相关的部分。</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ================= 模块 7 ================= -->
+    <section class="chapter reveal" id="m7">
+      <span class="chapter-tag">模块 07</span>
+      <h2>术语速查：以后再看到这些词就不慌了</h2>
+      <p class="chapter-lead">
+        挑的是新闻和产品说明里出现频率最高、误解最多的一批。看完这页，你读 AI 相关的报道会顺很多。
+      </p>
+
+      <div class="chapter-body">
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>术语</th><th>一句话解释</th></tr></thead>
+            <tbody>
+              <tr><td>训练 / 推理</td><td>训练＝调整参数（贵、慢、离线做一次）；推理＝用训好的参数算答案（便宜、快、上线天天跑）。</td></tr>
+              <tr><td>参数</td><td>模型学到的数字，就是权重。训练改的是它，推理时它冻结不变。</td></tr>
+              <tr><td>超参数</td><td>人设定的数字：学习率、层数、批量大小。模型自己不会调，要靠人试或自动搜索。</td></tr>
+              <tr><td>损失函数</td><td>衡量「预测和正确答案差多远」的公式。训练的唯一目标就是让它变小。</td></tr>
+              <tr><td>梯度下降</td><td>沿损失变小的方向挪参数。深度学习的全部训练都靠它（的变体）。</td></tr>
+              <tr><td>学习率</td><td>每一步挪多远。太小走不完，太大飞出去。</td></tr>
+              <tr><td>Epoch / Batch</td><td>把全部训练数据过一遍叫 1 个 epoch；数据太大，一次只喂一小批，这一小批叫 batch。</td></tr>
+              <tr><td>过拟合</td><td>训练集上表现极好，新数据上很差。本质是背答案而非学规律。</td></tr>
+              <tr><td>正则化</td><td>给「参数过大」加惩罚，逼模型别把曲线扭得太夸张。常见的 L1/L2、Dropout 都算。</td></tr>
+              <tr><td>训练集 / 验证集 / 测试集</td><td>训练集学参数；验证集调超参数；测试集只在最后用一次，评估真实水平。混用会得出虚高的结论。</td></tr>
+              <tr><td>Embedding（嵌入）</td><td>把一个词/图片变成一串数字向量，让「意思相近」变成「距离相近」。这是模型能处理语义的基础。</td></tr>
+              <tr><td>Token</td><td>模型处理文本的最小单位，大约是词或词的一部分。收费模型通常按 token 计价。</td></tr>
+              <tr><td>上下文窗口</td><td>模型一次能「看见」多少 token。超出就记不住了。</td></tr>
+              <tr><td>微调（Fine-tuning）</td><td>拿一个已训好的大模型，用自己的小数据再训一会儿，让它适应特定任务。</td></tr>
+              <tr><td>RAG（检索增强）</td><td>先去你的资料库里搜相关内容，再让模型基于这些内容回答。缓解幻觉的常用工程手段。</td></tr>
+              <tr><td>幻觉</td><td>模型流畅地生成了错误内容。根源是它的目标是「像真的」，不是「是真的」。</td></tr>
+              <tr><td>对齐（Alignment）</td><td>让模型的行为符合人类意图和价值观的一整套技术，包括人类反馈强化学习（RLHF）。</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= 模块 8 ================= -->
+    <section class="chapter reveal" id="m8">
+      <span class="chapter-tag">模块 08</span>
+      <h2>自测八题：确认你真的懂了</h2>
+      <p class="chapter-lead">
+        这八题不是考记忆，是考直觉。每题选完立刻告诉你为什么，选错也没关系——错的那题往往记得最牢。
+      </p>
+
+      <div class="chapter-body">
+        <div class="quiz" id="quiz"></div>
+        <div class="quiz-foot">
+          <div class="score-big"><span id="quizScore">0</span><small> / 8</small></div>
+          <div class="score-msg" id="quizMsg">还没有开始答题。</div>
+          <button class="btn btn-sm" id="quizReset">重做一遍</button>
+        </div>
+      </div>
+    </section>
+
+    <footer class="foot">
+      <p><strong style="color:var(--fg-2)">关于这个页面</strong></p>
+      <p>
+        全部内容为静态文件，交互实验在浏览器本地计算，不发送任何数据、不加载任何第三方资源。
+        所有演示都是真实的算法实现（逻辑回归、K-means、Q-learning、最小二乘多项式拟合），
+        只是把规模缩小到你能一眼看懂的程度。
+      </p>
+      <p style="margin-top:14px;color:var(--fg-3)">
+        读到这里大概花了你 25 分钟。如果你只带走一句话：
+        <strong>机器学习是在数据里找规律，并且它的自信与它的正确无关。</strong>
+      </p>
+    </footer>
+
+  </main>
+</div>
+
+<div class="scrim" id="scrim"></div>
+
+<script src="assets/js/main.js"></script>
+<script src="assets/js/demos.js"></script>
+<script src="assets/js/quiz.js"></script>
+</body>
+</html>

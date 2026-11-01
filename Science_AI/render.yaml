@@ -1,0 +1,16 @@
+# Render Blueprint —— 纯静态站点
+# 用法：把这个仓库连到 Render，Render 会自动读取本文件并创建 Static Site。
+# 静态站点在免费版上：不休眠、无冷启动、不消耗 750 实例小时、不需要信用卡。
+services:
+  - type: web
+    name: ai-ml-101
+    runtime: static
+    buildCommand: echo "no build step required"
+    staticPublishPath: ./
+    headers:
+      - path: /assets/*
+        name: Cache-Control
+        value: public, max-age=31536000, immutable
+      - path: /index.html
+        name: Cache-Control
+        value: public, max-age=0, must-revalidate
